@@ -30,4 +30,9 @@ public class PlayerVisual : MonoBehaviour
     {
         animator.SetTrigger(ATTACK);
     }
+
+
+    public void TriggerEndAttackAnimation() {
+        Player.Instance.ColliderOff();
+    }
 }
