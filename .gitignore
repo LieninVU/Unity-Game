@@ -1,4 +1,5 @@
 # Unity generated folders
+.utmp/
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -8,14 +9,38 @@
 [Uu]ser[Ss]ettings/
 [Mm]emoryCaptures/
 [Rr]ecordings/
+*.log
 
-# Addressables and generated data
-Assets/AddressableAssetsData/*
+# By default Unity supports Blender asset imports
+*.blend1
+*.blend1.meta
+
+# Addressables generated data
+/ServerData
+/[Aa]ssets/StreamingAssets/aa*
+/[Aa]ssets/AddressableAssetsData/link.xml*
+/[Aa]ssets/Addressables_Temp*
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+
+# Visual Scripting auto-generated files
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+
+# Auto-generated scenes by tests
+InitTestScene*.unity*
+/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 # Visual Studio / Rider / VS Code
 .vs/
 .vscode/
 .idea/
+.gradle/
+ExportedObj/
+.consulo/
+/[Aa]ssets/Plugins/Editor/JetBrains*
+*.DotSettings.user
 *.csproj
 *.unityproj
 *.sln
@@ -33,6 +58,18 @@ Assets/AddressableAssetsData/*
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+
+# Build output artifacts
+*.apk
+*.aab
+*.app
+*.unitypackage
+*.unitypackage.meta
+
+# Crash and diagnostics files
+sysinfo.txt
+mono_crash.*
+crashlytics-build.properties
 
 # OS / misc
 .DS_Store
