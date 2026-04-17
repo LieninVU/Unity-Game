@@ -1,51 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{  
+{
     public static Player Instance { get; private set; }
+
     private Rigidbody2D rb;
     [SerializeField] private float Speed = 10f;
     private float minSpeed = 0.1f;
+
     private bool isRun = false;
     private bool flipX = false;
 
     private void Awake()
     {
         Instance = this;
-        rb = GetComponent<Rigidbody2D>();       
+        rb = GetComponent<Rigidbody2D>();
+
+        GameInput.Instance.OnAttackStarted += HandleAttack;
     }
 
-
-    
+    private void HandleAttack()
+    {
+        if (PlayerVisual.Instance != null)
+            PlayerVisual.Instance.PlayAttack();
+    }
 
     private void FixedUpdate()
     {
         HandleMovement();
     }
 
-
     private void HandleMovement()
     {
         Vector2 inputVector = GameInput.Instance.GetMovementVector();
         inputVector = inputVector.normalized;
+
         rb.MovePosition(rb.position + inputVector * (Speed * Time.fixedDeltaTime));
-        if(Mathf.Abs(inputVector.x) > minSpeed || (Mathf.Abs(inputVector.y) > minSpeed)){
-            isRun = true;
-        } else
+
+        isRun = Mathf.Abs(inputVector.x) > minSpeed || Mathf.Abs(inputVector.y) > minSpeed;
+
+        if (Mathf.Abs(inputVector.x) > minSpeed)
         {
-            isRun = false;
-        }
-        if(inputVector.x > minSpeed && inputVector.x != 0)
-        {
-            flipX = false;
-        }
-        else if (inputVector.x < minSpeed && inputVector.x != 0)
-        {
-            flipX= true;
+            flipX = inputVector.x < 0;
         }
     }
-    public bool isRunning() { return isRun;}
-    public bool isFlipX() { return flipX;}
+
+    public bool IsRunning() => isRun;
+    public bool IsFlipX() => flipX;
+
+    private void OnDestroy()
+    {
+        if (GameInput.Instance != null)
+            GameInput.Instance.OnAttackStarted -= HandleAttack;
+    }
 }
