@@ -14,15 +14,11 @@ public class ZombieAi : MonoBehaviour
     private Vector3 roamPosition;
     private Vector3 startPosition;
 
+
     private enum State
     {
         Idle,
         Roaming
-    }
-
-    private void Start()
-    {
-        startPosition = transform.position; 
     }
 
     private void Awake()
@@ -54,14 +50,29 @@ public class ZombieAi : MonoBehaviour
 
     private void Roaming()
     {
+        startPosition = transform.position;
         roamPosition = GetRoamingPosition();
         navMeshAgent.SetDestination(roamPosition);
+        FlipX(startPosition, roamPosition);
     }
 
 
     private Vector3 GetRoamingPosition()
     {
         return startPosition + Instruments.GetRandomDir() * UnityEngine.Random.Range(roamingDistanceMin, roamingDistanceMax);
+    }
+
+
+
+    private void FlipX(Vector3 positionNow, Vector3 positionGoal)
+    {
+        if ((positionNow.x - positionGoal.x) < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        } else if ((positionNow.x - positionGoal.x) > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 
 
