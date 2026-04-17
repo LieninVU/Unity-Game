@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.TryGetComponent(out Enemy enemyEntity))
+        if(collision.transform.TryGetComponent(out EnemyEntity enemyEntity))
         {
             enemyEntity.TakeDamage(damage);
         }

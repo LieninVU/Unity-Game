@@ -10,7 +10,7 @@ public class ZombieAi : MonoBehaviour
     [SerializeField] private float roamingTimerMax = 2f;
     private NavMeshAgent navMeshAgent;
     private State stage;
-    private float roamingTime;
+    private float roamingTime = 0f;
     private Vector3 roamPosition;
     private Vector3 startPosition;
 
@@ -27,6 +27,7 @@ public class ZombieAi : MonoBehaviour
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         stage = startingState;
+        roamingTime = roamingTimerMax;
     }
 
     private void Update()
@@ -37,8 +38,14 @@ public class ZombieAi : MonoBehaviour
             case State.Idle:
                 break;
             case State.Roaming:
+                // Initialize roaming timer if this is the first time entering Roaming state
+                if (roamingTime == 0f)
+                {
+                    roamingTime = roamingTimerMax;
+                }
+                
                 roamingTime -= Time.deltaTime;
-                if (roamingTime < 0)
+                if (roamingTime <= 0f)
                 {
                     Roaming();
                     roamingTime = roamingTimerMax;

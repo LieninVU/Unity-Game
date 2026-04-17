@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyEntity : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 50;
     [SerializeField] private int currentHealth;
@@ -20,10 +20,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Death()
+    public virtual void Death()
     {
         if (currentHealth <= 0) 
         {
+            // Уведомляем GameManager об убийстве врага
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.EnemyKilled();
+            }
             Destroy(gameObject);
         }
     }
